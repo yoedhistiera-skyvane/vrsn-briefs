@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VRSN APR W4 — Ad Creative QA Report</title>
+<style>
+:root { --bg:#0f1218; --panel:#171b24; --panel2:#1d2230; --txt:#e6e9ef; --muted:#8a93a6; --border:#2a3142; --high:#ff5d6c; --med:#ffb547; --low:#7aa6ff; --ok:#46c47c; --warn:#ffb547; --critical:#ff5d6c; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--txt); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif; font-size:14px; line-height:1.5; }
+.wrap { max-width:1400px; margin:0 auto; padding:32px 24px; }
+h1 { font-size:26px; margin:0 0 4px; letter-spacing:-0.01em; }
+h2 { font-size:18px; margin:32px 0 12px; letter-spacing:-0.01em; }
+.sub { color:var(--muted); margin-bottom:24px; }
+.summary { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+.card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+.card .label { font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px; }
+.card .value { font-size:28px; font-weight:600; letter-spacing:-0.02em; }
+.card.high .value { color:var(--high); }
+.card.med .value { color:var(--med); }
+.card.low .value { color:var(--low); }
+.alert { background:#3a1d23; border:1px solid #ff5d6c66; border-left:3px solid var(--high); border-radius:8px; padding:14px 18px; margin:8px 0 24px; }
+.alert h3 { margin:0 0 4px; color:var(--high); font-size:15px; }
+.alert p { margin:0; color:#ffcfd4; font-size:13px; }
+table { width:100%; border-collapse:collapse; background:var(--panel); border-radius:8px; overflow:hidden; border:1px solid var(--border); }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+th { background:var(--panel2); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); position:sticky; top:0; z-index:1; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:#1f2535; }
+.thumb-cell { width:120px; }
+.thumb-cell img { width:100px; height:100px; object-fit:cover; border-radius:6px; background:#000; border:1px solid var(--border); cursor:zoom-in; display:block; }
+.num-cell { font-family:"SF Mono",ui-monospace,Menlo,monospace; color:var(--muted); white-space:nowrap; }
+.folder-cell { font-weight:500; white-space:nowrap; }
+.cat-cell { font-size:12px; color:var(--muted); white-space:nowrap; }
+.sev-cell { width:90px; }
+.sev-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; letter-spacing:0.04em; }
+.sev-high { background:#3a1d23; color:var(--high); }
+.sev-med { background:#3d2f17; color:var(--med); }
+.sev-low { background:#1c2b46; color:var(--low); }
+.issue-cell { min-width:300px; }
+.file-cell { font-family:"SF Mono",ui-monospace,Menlo,monospace; font-size:11px; color:var(--muted); max-width:260px; }
+.file-cell .filename { word-break:break-all; }
+.status-ok td:first-child { border-left:3px solid var(--ok); }
+.status-warn td:first-child { border-left:3px solid var(--warn); }
+.status-critical td:first-child { border-left:3px solid var(--critical); }
+.filters { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+.filters select, .filters input { background:var(--panel); color:var(--txt); border:1px solid var(--border); border-radius:6px; padding:8px 10px; font-size:13px; outline:none; }
+.filters select:focus, .filters input:focus { border-color:#4a7cff; }
+.split { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.note { font-size:12px; color:var(--muted); margin-top:8px; }
+@media (max-width:900px) { .summary{grid-template-columns:repeat(2,1fr);} .split{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>VRSN APR W4 — Ad Creative QA Report</h1>
+  <div class="sub">Versesole [vrsn] sneaker · 142 issues flagged across 10 of 10 folders · 503 assets total reviewed</div>
+
+  <div class="summary">
+    <div class="card"><div class="label">Issues flagged</div><div class="value">142</div></div>
+    <div class="card high"><div class="label">High severity</div><div class="value">65</div></div>
+    <div class="card med"><div class="label">Medium</div><div class="value">56</div></div>
+    <div class="card low"><div class="label">Low</div><div class="value">21</div></div>
+  </div>
+
+  <div class="alert">
+    <h3>⚠ Critical: Internal AI prompt leaked into 3 Orthotics Exit ads (0044, 0045, 0046)</h3>
+    <p>Text reads: "Use only the exact LP offer text shown in the scene. No invented discount or urgency." — these must NOT ship.</p>
+  </div>
+
+  <div class="alert">
+    <h3>⚠ Travel folder: systemic product/branding error (49 of 50 assets)</h3>
+    <p>Brand mark consistently rendered as <code>(vrsn)</code> rounded parens instead of <code>[vrsn]</code> square brackets; product shows 5 eyelets instead of 4; canvas upper instead of knit. Recommend full re-generation of this folder.</p>
+  </div>
+
+  <div class="split">
+    <div>
+      <h2>Issues per folder</h2>
+      <table>
+        <thead><tr><th>Folder</th><th>Flagged</th><th>Total</th><th>Hit rate</th></tr></thead>
+        <tbody><tr class="status-warn">
+      <td>Orthotics Story</td>
+      <td>14</td>
+      <td>50</td>
+      <td>28%</td>
+    </tr>
+<tr class="status-critical">
+      <td>Nurse</td>
+      <td>18</td>
+      <td>50</td>
+      <td>36%</td>
+    </tr>
+<tr class="status-warn">
+      <td>PF Story</td>
+      <td>8</td>
+      <td>50</td>
+      <td>16%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Legacy PDP</td>
+      <td>7</td>
+      <td>53</td>
+      <td>13%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Foot Pain</td>
+      <td>13</td>
+      <td>50</td>
+      <td>26%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Quiz</td>
+      <td>9</td>
+      <td>50</td>
+      <td>18%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Compare</td>
+      <td>3</td>
+      <td>50</td>
+      <td>6%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Orthotics Exit</td>
+      <td>10</td>
+      <td>50</td>
+      <td>20%</td>
+    </tr>
+<tr class="status-critical">
+      <td>Travel</td>
+      <td>49</td>
+      <td>50</td>
+      <td>98%</td>
+    </tr>
+<tr class="status-warn">
+      <td>Barefoot</td>
+      <td>11</td>
+      <td>50</td>
+      <td>22%</td>
+    </tr></tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Issues by category</h2>
+      <table>
+        <thead><tr><th>Category</th><th>Count</th></tr></thead>
+        <tbody><tr><td>Text error</td><td>48</td></tr>
+<tr><td>AI artifact</td><td>43</td></tr>
+<tr><td>Wrong product</td><td>39</td></tr>
+<tr><td>Anatomy</td><td>12</td></tr></tbody>
+      </table>
+      <p class="note">AI artifact = warped product, distorted logo, garbled stitching. Wrong product = silhouette/colorway doesn't match Versesole. Text error = misspelling, garbled words, wrong copy. Anatomy = malformed feet/hands/toes.</p>
+    </div>
+  </div>
+
+  <h2>All findings (142)</h2>
+  <div class="filters">
+    <select id="f-folder"><option value="">All folders</option><option value="Barefoot">Barefoot</option><option value="Compare">Compare</option><option value="Foot Pain">Foot Pain</option><option value="Legacy PDP">Legacy PDP</option><option value="Nurse">Nurse</option><option value="Orthotics Exit">Orthotics Exit</option><option value="Orthotics Story">Orthotics Story</option><option value="PF Story">PF Story</option><option value="Quiz">Quiz</option><option value="Travel">Travel</option></select>
+    <select id="f-severity"><option value="">All severities</option><option value="HIGH">HIGH</option><option value="MEDIUM">MEDIUM</option><option value="LOW">LOW</option></select>
+    <select id="f-category"><option value="">All categories</option><option value="AI artifact">AI artifact</option><option value="Anatomy">Anatomy</option><option value="Text error">Text error</option><option value="Wrong product">Wrong product</option></select>
+    <input id="f-search" type="search" placeholder="Search issue text…" style="flex:1; min-width:200px;">
+  </div>
+  <table id="findings">
+    <thead><tr><th>Preview</th><th>Folder</th><th>#</th><th>Category</th><th>Severity</th><th>Issue</th><th>File</th></tr></thead>
+    <tbody>
+<tr data-folder="Barefoot" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20004.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20004.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0004</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black upper paired with white sole — reference Black colorway has all-black sole. Wrong colorway.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 004.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20005.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20005.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0005</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Both shoes shown as black upper with white sole — Black colorway should have all-black sole. Wrong colorway.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 005.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20008.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20008.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0008</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black upper with white sole — Black colorway should have all-black sole. Wrong colorway.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 008.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200036.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200036.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0036</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black upper with white sole — Black colorway should have all-black sole. Wrong colorway shown.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0036.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="HIGH" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200019.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200019.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0019</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Muddy beige shoe shows no visible laces or lace eyelets — lace area is smooth/blank where 4 eyelets with laces should be visible, indicating the AI rendered the upper without the lace closure</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0019.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200016.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200016.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0016</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Profession tag says &#x27;KINDERGARTEN TEACHER&#x27; in a Nurse-targeted folder. Also &#x27;Robert H.&#x27; (male name) paired with &#x27;READ HER STORY&#x27; CTA — gender pronoun mismatch.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0016.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200017.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200017.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0017</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Quote attributed to &#x27;Bryan T., Retail worker&#x27; (male, retail) but CTA says &#x27;READ HER STORY&#x27; and folder is Nurse — wrong gender pronoun and wrong profession for the targeted audience.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0017.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200024.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200024.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0024</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Testimonial signed &#x27;Michael D.&#x27; (male) paired with &#x27;READ HER STORY&#x27; CTA — gender pronoun mismatch.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0024.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200032.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200032.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0032</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shoe shown is a canvas low-top with chunky white rubber bumper sole (Vans/Keds silhouette), not the knit Versesole upper. Wrong product silhouette.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0032.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200036.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200036.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0036</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black uppers shown with a contrasting bright white midsole — Versesole Black colorway is all-black including sole. Wrong colorway.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0036.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200037.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200037.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0037</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shoe rendered as canvas-style sneaker with rubber bumper toe (Vans/Keds silhouette), not the knit Versesole. Wrong product silhouette.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0037.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200042.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200042.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0042</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black upper paired with bright white midsole — not a baseline colorway (Black is all-black sole).</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0042.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200045.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200045.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black uppers paired with bright white midsoles — not a baseline colorway. Black should have all-black sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0045.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200025.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200025.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0025</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black shoe at bottom has a white midsole/outsole. The Black Versesole is all-black with a black sole — should not have a white sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0025.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200028.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200028.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0028</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">The white shoe labeled &#x27;[vrsn] Aligned&#x27; appears taller (mid/high-top look) with extra eyelets/lace rows, not the low-top 4-eyelet Versesole silhouette.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0028.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200036.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200036.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0036</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">All three black shoes shown have white midsoles and varying silhouettes (athletic sneaker on top, canvas Vans-style below) — none match the Versesole knit low-top with all-black sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0036.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200037.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200037.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0037</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">[vrsn] brand mark appears printed in bright RED on the heel/upper of the white shoes and on the sole — should be subtle tonal embossing on the medial side of the sole, never red on the upper.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0037.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200043.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200043.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0043</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">White shoe shows a red &#x27;[vrsn]&#x27; logo printed on the heel/back of the upper — wrong color and wrong placement (should be embossed in matching tone on the medial sole).</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0043.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Internal prompt instruction text leaked into the ad body: &#x27;Use only the exact LP offer text shown in the scene. No invented discount or urgency.&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200045.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200045.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Internal prompt instruction text leaked into the ad body: &#x27;Use only the exact LP offer text shown in the scene. No invented discount or urgency.&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0045.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200046.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200046.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0046</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Internal prompt instruction text leaked into the ad body: &#x27;Use only the exact LP offer text shown in the scene. No invented discount or urgency.&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0046.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200014.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200014.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0014</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shoe shown has only 3 visible lace eyelets and a flat canvas/plimsoll-style upper without the Versesole knit texture or side stitching detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0014.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200026.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200026.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0026</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Comparison table is logically broken — &#x27;Progressive Support ([vrsn])&#x27; has a green check for &#x27;does the work&#x27;, which contradicts the headline &#x27;Passive Support Creates Dependency. Progressive Support Builds Strength.&#x27; Both columns also list &#x27;works with feet&#x27; with opposite indicators.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0026.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200040.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200040.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0040</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shoe shown is a low canvas/plimsoll style with smooth upper — missing the Versesole knit fabric, defined 4-eyelet lacing, and side stitching detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0040.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200041.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200041.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0041</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">White shoe is clearly a canvas plimsoll/Vans-style sneaker, not the knit Versesole — wrong silhouette, no knit texture, no visible side stitch detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0041.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200043.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200043.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0043</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Both comparison columns are labeled &#x27;PRO&#x27; — the left (Custom Orthotics, 0% strength improvement, X mark) should be labeled &#x27;CON&#x27; for the comparison to make sense.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0043.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200045.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200045.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">White shoe at bottom is a generic canvas plimsoll silhouette, missing the Versesole knit upper texture and characteristic side stitch detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0045.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200047.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200047.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0047</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shows black upper with a WHITE sole — Versesole Black colorway has an all-black sole (no white), so this is the wrong colorway depiction.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0047.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200049.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200049.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0049</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">White shoe is a smooth canvas/plimsoll-style sneaker without Versesole knit upper texture, missing visible side stitching and the proper knit collar.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0049.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200024.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200024.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0024</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black shoes shown in product card have white midsole — the Black Versesole colorway is all-black per baseline. Silhouette also appears more canvas/skate-style than the 4-eyelet knit Versesole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0024.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200030.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200030.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0030</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Black shoes have white midsole (Black colorway should be all-black). Silhouette looks like canvas low-top, not the Versesole knit upper with 4 eyelets.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0030.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200033.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200033.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0033</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">White shoe shown has 5+ eyelet pairs and a canvas/sneaker construction — does not match Versesole&#x27;s 4-eyelet knit silhouette with embossed [vrsn] sole logo.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0033.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200016.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200016.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0016</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Subreddit name misspelled as &#x27;r/PlantarFascilitis&#x27; — should be &#x27;r/PlantarFasciitis&#x27; (letters transposed: extra &#x27;l&#x27;, missing one &#x27;i&#x27;)</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0016.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Subreddit name misspelled as &#x27;r/PlantarFascilitis&#x27; — should be &#x27;r/PlantarFasciitis&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="HIGH" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200050.jpg" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200050.jpg" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0050</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Duplicate ghosted &#x27;[vrsn]&#x27; logo rendered behind/below the main logo at top — layering/render artifact</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0050.jpg</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200010.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200010.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0010</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes show 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0010.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200011.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200011.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0011</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27;; black colorway has white sole — Black variant should be all-black per spec</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0011.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200012.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200012.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0012</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoe has 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0012.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200013.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200013.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0013</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; garbled fake-logo text on lateral side of shoe; 5 eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0013.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200014.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200014.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0014</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Top brand logo rendered as &#x27;(vrsn)&#x27; rounded parens (inline &#x27;[vrsn]&#x27; is correct); shoe has 5 eyelets, smooth canvas not knit, no embossed [vrsn] on sole</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0014.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200015.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200015.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0015</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo as &#x27;(vrsn)&#x27; rounded parens; foreground shoe shows no laces/eyelets — appears to be a slip-on, not the laced Versesole sneaker</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0015.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200016.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200016.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0016</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; both shoes show 5 eyelets instead of 4</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0016.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200018.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200018.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0018</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes have 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0018.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200019.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200019.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0019</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoe has 5 eyelets, smooth canvas not knit, garbled text on side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0019.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20002.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20002.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">002</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; with rounded parentheses instead of &#x27;[vrsn]&#x27; with square brackets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 002.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200020.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200020.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0020</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo as &#x27;(vrsn)&#x27; rounded parens; both hands holding passports show distorted/awkwardly-merged fingers; shoes have 5 eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0020.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200021.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200021.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0021</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes smooth canvas not knit, 5 eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0021.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200023.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200023.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0023</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoe has 5 eyelets; sole logo garbled/missing proper brackets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0023.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200024.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200024.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0024</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoe has 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0024.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200025.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200025.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0025</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoe has 5 eyelets, smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0025.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200026.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200026.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0026</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens instead of &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0026.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200029.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200029.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0029</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Shoes have oversized/chunky white sole inconsistent with Versesole silhouette; smooth uppers without visible knit texture or proper eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0029.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20003.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20003.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">003</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; with rounded parentheses instead of &#x27;[vrsn]&#x27; with square brackets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 003.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200034.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200034.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0034</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes have 5 eyelets, smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0034.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200036.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200036.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0036</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; headline says &#x27;Premium canvas&#x27; but product spec is knit; 5 eyelets; garbled text on shoe side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0036.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200038.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200038.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0038</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; all three colorway shoes have 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0038.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200039.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200039.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0039</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes have 5 eyelets, smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0039.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20004.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20004.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">004</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; with rounded parentheses instead of &#x27;[vrsn]&#x27;; shoe shows 5 eyelets and smooth canvas (not knit) — wrong silhouette</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 004.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200042.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200042.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0042</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; shoes have 5 eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0042.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200047.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200047.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0047</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo as &#x27;(vrsn)&#x27; rounded parens; foreground shoe appears laceless/slip-on style, not the laced Versesole sneaker</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0047.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20005.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20005.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">005</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; all three colorway shoes show 5 eyelets instead of 4</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 005.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200050.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200050.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0050</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Sole [vrsn] logo rendered in red (should be embossed same color as sole); inset photos show shoes with bulky non-Versesole silhouette inconsistent with reference</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0050.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20006.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20006.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">006</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens instead of &#x27;[vrsn]&#x27; square brackets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 006.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20007.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20007.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">007</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; top-down shoes show 5 eyelets, smooth not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 007.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="HIGH" data-category="Text error">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20009.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20009.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">009</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-high">HIGH</span></td>
+  <td class="issue-cell">Brand logo rendered as &#x27;(vrsn)&#x27; rounded parens; hand holding phone shows malformed/short thumb</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 009.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20009.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%20009.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0009</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Right foot on concrete appears truncated/stubby with toes obscured or malformed; foot looks unnaturally short and compressed against frame edge.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 009.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200011.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200011.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0011</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">X-ray feet illustration — toe digits on both feet appear malformed/merged; bone structure does not show 5 clearly defined toes per foot.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0011.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200018.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200018.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0018</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Left foot (red &#x27;compressed&#x27;) illustration appears to show only 4 distinct toes — pinky toe missing or merged.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0018.png</span></td>
+</tr>
+<tr data-folder="Compare" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20040.png" target="_blank"><img loading="lazy" src="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20040.png" alt=""></a></td>
+  <td class="folder-cell">Compare</td>
+  <td class="num-cell">0040</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Versesole shown as black upper with white foam sole — non-standard colorway. Baseline Black colorway is all-black (black sole).</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - VRSN vs Kuru Hoka Orthofeet APRW4 - 040.png</span></td>
+</tr>
+<tr data-folder="Compare" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20045.png" target="_blank"><img loading="lazy" src="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20045.png" alt=""></a></td>
+  <td class="folder-cell">Compare</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Versesole shown as black upper with white foam sole — non-standard colorway. Baseline Black is all-black.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - VRSN vs Kuru Hoka Orthofeet APRW4 - 045.png</span></td>
+</tr>
+<tr data-folder="Compare" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20050.png" target="_blank"><img loading="lazy" src="Compare/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20VRSN%20vs%20Kuru%20Hoka%20Orthofeet%20APRW4%20-%20050.png" alt=""></a></td>
+  <td class="folder-cell">Compare</td>
+  <td class="num-cell">0050</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Versesole shown as black upper with white foam sole — non-standard colorway. Baseline Black is all-black; [vrsn] medial logo also not visible on sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - VRSN vs Kuru Hoka Orthofeet APRW4 - 050.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20027.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20027.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">027</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo on foam outsole appears in red/orange color and odd placement; should be subtle embossed logo on medial side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 027.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20029.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20029.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">029</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">White shoe missing visible laces/eyelets across the upper; lacing detail is absent or distorted compared to baseline 4-eyelet lacing</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 029.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20030.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20030.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">030</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo appears in red on heel/upper side of black shoe instead of subtle embossed logo on foam outsole medial side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 030.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20036.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20036.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">036</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Black colorway shown with white sole; baseline specifies Black as all-black</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 036.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20038.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20038.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">038</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo on white shoe rendered in red on heel/upper area instead of subtle embossed mark on foam outsole</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 038.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20045.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20045.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">045</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Two shoes appear to be mismatched beige tones (left shoe lighter/greyish, right shoe darker tan); colorways inconsistent between L and R</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 045.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20046.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20046.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">046</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo rendered in red on heel/upper side of black shoe instead of embossed logo on foam outsole medial side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 046.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20047.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20047.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">047</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo rendered in red on heel area of white shoe instead of subtle embossed logo on foam outsole</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 047.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20049.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20049.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">049</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">[vrsn] logo rendered in red on heel area of black shoe instead of subtle embossed logo on foam outsole</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 049.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20050.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20050.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">050</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Black colorway shown with white sole; baseline specifies Black as all-black</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 050.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200035.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200035.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0035</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">4-color lineup (top-down) shows beige, white, black, black — Navy colorway appears duplicated as Black (or Navy is missing); both bottom shoes look identical pure black</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0035.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Small red [vrsn] brand tag inside heel of all three shoes appears garbled/truncated, reading as &#x27;[vrn]&#x27; or &#x27;[vsn]&#x27; rather than &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200048.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200048.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0048</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Small red [vrsn] brand tag inside heel of all three shoes appears garbled/truncated, reading as &#x27;[vrn]&#x27; rather than &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0048.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200013.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200013.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0013</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Comparison image labels shoes as &#x27;Dansko, Hoka, Clove, Brooks, NB, Alegria&#x27; but all six are shown as identical slip-on/clog silhouettes — Hoka and New Balance are known for sneakers, not slip-ons. Misrepresents named competitor brands.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0013.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200018.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200018.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0018</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Testimonial profession tag says &#x27;MAIL CARRIER&#x27; — wrong target audience for the Nurse folder.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0018.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200023.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200023.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0023</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Tote bag in lifestyle photo reads &#x27;TEACHER FUEL&#x27; — wrong profession context inside a Nurse-targeted ad.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0023.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200033.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200033.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0033</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Black shoe shows green/yellow piping along sole and a red &#x27;[vrsn]&#x27; logo — neither the green accent nor the red logo color matches the all-black baseline colorway.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0033.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200034.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200034.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0034</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Headline reads &#x27;Shift Shouldn&#x27;t End With Your Feet On Ice.&#x27; — missing leading &#x27;Your&#x27; word vs. the campaign line used elsewhere (&#x27;Your Shift Shouldn&#x27;t End...&#x27;). Also shoe has red [vrsn] logo on sole instead of embossed/same-color.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0034.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200041.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200041.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0041</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Red &#x27;[vrsn]&#x27; logo placed on the side panel of the white shoe upper — baseline product has logo embossed on medial sole only, never in red on the upper.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0041.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Red &#x27;[vrsn]&#x27; logo visible on medial sole — baseline logo is embossed same-color, not red. Logo position/styling inconsistent with product.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200046.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200046.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0046</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe rendered with a Vans/Keds-style boxy toe and bumper sole instead of the smooth knit Versesole low-top silhouette.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0046.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200050.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%200050.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0050</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Red &#x27;[vrsn]&#x27; logo placed on the side of the white shoe upper — baseline product never shows the logo in red or on the upper; it is embossed same-color on the medial sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 0050.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200022.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200022.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0022</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Back shoe&#x27;s exposed sole shows unusual diagonal parallel-line tread pattern that doesn&#x27;t match the smooth flat Versesole sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0022.png</span></td>
+</tr>
+<tr data-folder="Orthotics Exit" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200034.png" target="_blank"><img loading="lazy" src="Orthotics%20Exit/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Dependency%20Exit%20APRW4%20-%200034.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Exit</td>
+  <td class="num-cell">0034</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Black sole shown (upper-right shoe flipped) has prominent diagonal stripe/grooved tread pattern, not matching the smooth Versesole sole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Dependency Exit APRW4 - 0034.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200034.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200034.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0034</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Headline &#x27;The Dependency Cycle Nobody Warns You About&#x27; is mismatched with the bullets below (&#x27;2 hours daily&#x27;, &#x27;Add an hour each week&#x27;, &#x27;Track pain levels&#x27;), which read as an action plan rather than a dependency cycle.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0034.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200039.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200039.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0039</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Beige shoe at bottom lacks the Versesole knit texture, visible 4 eyelets, and side stitching — appears more like a canvas/suede slip-on than the knit Versesole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0039.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Beige shoe appears as a smooth canvas/suede slip-on style without the Versesole knit upper or defined eyelet/stitching detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="MEDIUM" data-category="Wrong product">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200046.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200046.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0046</td>
+  <td class="cat-cell">Wrong product</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Beige shoe on pedestal looks like a canvas/suede slip-on; lacks the knit texture, distinct 4 eyelets, and side stitching that define the Versesole.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0046.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200041.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200041.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0041</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Background review-card text is AI-garbled/illegible — multiple cards contain nonsense words and broken kerning typical of generative text artifacts.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0041.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200045.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200045.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Reviewer avatar shows initials &#x27;KW&#x27; but the quote is attributed to &#x27;Robert H., Phoenix, AZ&#x27; — initials mismatch attribution.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0045.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200048.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200048.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0048</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Headline reads &#x27;After 3 Weeks, Almost Gone.&#x27; but the quote body says &#x27;After 2 weeks in [vrsn], I&#x27;m back to my morning walks.&#x27; — 3 vs 2 week inconsistency.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0048.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="MEDIUM" data-category="Text error">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200050.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200050.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0050</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Reviewer avatar shows initials &#x27;PW&#x27; but the quote is attributed to &#x27;Rachel M., 42, nurse.&#x27; — initials mismatch attribution (should be &#x27;RM&#x27;).</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0050.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200027.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200027.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0027</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Bare foot on the left appears to have malformed/missing pinky toe — only 4 distinct toes visible</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0027.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200028.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200028.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0028</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Bare foot has malformed/clumped toes with pinky toe missing or merged — only 4 distinct digits</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0028.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200029.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200029.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0029</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Bare foot has malformed/missing pinky toe — same anatomy issue as 0027/0028</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0029.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200030.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200030.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0030</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Bare foot has malformed/missing pinky toe — only 4 toes clearly visible</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0030.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200017.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200017.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0017</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets; garbled illegible text on lateral side of shoe (logo should only appear medial side)</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0017.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200022.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200022.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0022</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Brand logo as &#x27;(vrsn)&#x27; rounded parens; left panel shows distorted/odd skin around ankle/sock area</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0022.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200027.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200027.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0027</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Garbled illegible fake-logo text on lateral side of shoe (logo should only be medial side)</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0027.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200028.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200028.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0028</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets instead of 4; garbled fake-logo text on lateral side</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0028.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200030.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200030.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0030</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets instead of 4; smooth canvas top-down view not the knit material</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0030.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200031.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200031.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0031</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoes have 5 eyelets instead of 4; garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0031.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200032.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200032.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0032</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets; sole logo reads &#x27;vrsn&#x27; without square brackets — should be &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0032.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200033.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200033.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0033</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets, smooth canvas not knit, no embossed [vrsn] on sole as required</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0033.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200035.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200035.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0035</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets and garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0035.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200037.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200037.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0037</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets and garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0037.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200040.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200040.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0040</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoes have 5 eyelets; garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0040.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200044.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200044.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0044</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets; garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0044.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200048.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200048.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0048</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets; garbled text on lateral side of shoe</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0048.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="MEDIUM" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20008.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%20008.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">008</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-med">MEDIUM</span></td>
+  <td class="issue-cell">Shoes have 5 eyelets instead of 4; smooth canvas appearance not the specified knit material</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 008.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200010.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200010.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0010</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Side stitching detail on shoe rendered as garbled illegible script/text instead of clean stitching pattern from reference.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0010.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="LOW" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200026.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200026.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0026</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Bottom foot photo on concrete — toes appear unnaturally compressed/merged on outer edge, pinky toe area looks malformed.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0026.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="LOW" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200029.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200029.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0029</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Stylized footprint icon shows malformed toe shape — toes blob together at top rather than 5 distinct prints.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0029.png</span></td>
+</tr>
+<tr data-folder="Barefoot" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200034.png" target="_blank"><img loading="lazy" src="Barefoot/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Barefoot%20Betrayal%20APRW4%20-%200034.png" alt=""></a></td>
+  <td class="folder-cell">Barefoot</td>
+  <td class="num-cell">0034</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Shoe shows a green/lime stripe accent along midsole that does not exist on the Beige reference colorway; side stitching detail also looks garbled.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Barefoot Betrayal APRW4 - 0034.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20035.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20035.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">035</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Beige shoe side stitching detail appears garbled/text-like instead of clean simple stitching</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 035.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20037.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20037.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">037</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Beige shoe side detail shows garbled letter-like marks instead of clean stitching</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 037.png</span></td>
+</tr>
+<tr data-folder="Foot Pain" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20048.png" target="_blank"><img loading="lazy" src="Foot%20Pain/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Foot%20Pain%20Resignation%20APRW4%20-%20048.png" alt=""></a></td>
+  <td class="folder-cell">Foot Pain</td>
+  <td class="num-cell">048</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Beige shoe side detail shows garbled letter-like marks instead of clean simple stitching</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Foot Pain Resignation APRW4 - 048.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200014.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200014.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0014</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Black shoe appears to show 5 lace eyelets on the visible side instead of the baseline 4 eyelets</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0014.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="LOW" data-category="Text error">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200015.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200015.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0015</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Small red [vrsn] brand tag inside heel of black shoe appears truncated/garbled, reading like &#x27;[vrn]&#x27; instead of &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0015.png</span></td>
+</tr>
+<tr data-folder="Legacy PDP" data-severity="LOW" data-category="Text error">
+  <td class="thumb-cell"><a href="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200016.png" target="_blank"><img loading="lazy" src="Legacy%20PDP/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20PDP%20APRW4%20-%200016.png" alt=""></a></td>
+  <td class="folder-cell">Legacy PDP</td>
+  <td class="num-cell">0016</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Small red [vrsn] brand tag inside heel of black shoe appears truncated/garbled, reading like &#x27;[vrn]&#x27; instead of &#x27;[vrsn]&#x27;</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - PDP APRW4 - 0016.png</span></td>
+</tr>
+<tr data-folder="Nurse" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%20004.png" target="_blank"><img loading="lazy" src="Nurse/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Nurse%20_%20On-Feet%20Professional%20APRW4%20-%20004.png" alt=""></a></td>
+  <td class="folder-cell">Nurse</td>
+  <td class="num-cell">0004</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Red [vrsn] branding visible on heel cap of black shoe; baseline uses embossed same-color logo on medial sole only. Insole has unfamiliar orange dot logo element.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Nurse _ On-Feet Professional APRW4 - 004.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="LOW" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200015.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200015.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0015</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">The orthotic insert in the gym bag has &#x27;[vrsn]&#x27; branding on it, but [vrsn] is the shoe brand, not an orthotic brand — branding is misapplied to the wrong product.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0015.png</span></td>
+</tr>
+<tr data-folder="Orthotics Story" data-severity="LOW" data-category="Text error">
+  <td class="thumb-cell"><a href="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200016.png" target="_blank"><img loading="lazy" src="Orthotics%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Orthotics%20Story%20APRW4%20-%200016.png" alt=""></a></td>
+  <td class="folder-cell">Orthotics Story</td>
+  <td class="num-cell">0016</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Card labels are inconsistent and repetitive: &#x27;WEEK 1 / The first days felt different&#x27; and &#x27;DIFFERENT / Every step felt different&#x27; both reference &#x27;different&#x27; redundantly with mismatched label types.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Orthotics Story APRW4 - 0016.png</span></td>
+</tr>
+<tr data-folder="PF Story" data-severity="LOW" data-category="Text error">
+  <td class="thumb-cell"><a href="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200049.png" target="_blank"><img loading="lazy" src="PF%20Story/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Plantar%20Fasciitis%20Story%20APRW4%20-%200049.png" alt=""></a></td>
+  <td class="folder-cell">PF Story</td>
+  <td class="num-cell">0049</td>
+  <td class="cat-cell">Text error</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Boarding pass shows &#x27;FNT&#x27; as the Tokyo airport code; real Tokyo codes are NRT/HND. Likely AI-garbled detail.</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Plantar Fasciitis Story APRW4 - 0049.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="LOW" data-category="Anatomy">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200013.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200013.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0013</td>
+  <td class="cat-cell">Anatomy</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Feet on the wood floor appear disproportionately small/childlike relative to the adult legs above — proportions look AI-generated</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0013.png</span></td>
+</tr>
+<tr data-folder="Quiz" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200036.png" target="_blank"><img loading="lazy" src="Quiz/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Quiz%20APRW4%20-%200036.png" alt=""></a></td>
+  <td class="folder-cell">Quiz</td>
+  <td class="num-cell">0036</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">&#x27;[vrsn]&#x27; logo at top is extremely faded/low-contrast against background — nearly invisible, likely opacity or color error</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Quiz APRW4 - 0036.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200041.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200041.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0041</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Shoe has 5 eyelets instead of 4; smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0041.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200043.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200043.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0043</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Shoes have 5 eyelets and smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0043.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200045.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200045.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0045</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Both [vrsn] shoes shown have 5 eyelets instead of 4</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0045.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200046.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200046.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0046</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Main shoe has 5 eyelets, smooth canvas not knit</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0046.png</span></td>
+</tr>
+<tr data-folder="Travel" data-severity="LOW" data-category="AI artifact">
+  <td class="thumb-cell"><a href="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200049.png" target="_blank"><img loading="lazy" src="Travel/Blitzads%20-%20VRSN%20-%20Fresh%20Concepts%20-%20Travel%20APRW4%20-%200049.png" alt=""></a></td>
+  <td class="folder-cell">Travel</td>
+  <td class="num-cell">0049</td>
+  <td class="cat-cell">AI artifact</td>
+  <td class="sev-cell"><span class="sev-badge sev-low">LOW</span></td>
+  <td class="issue-cell">Black [vrsn] comparison shoes and foreground shoes both have 5 eyelets instead of 4</td>
+  <td class="file-cell"><span class="filename">Blitzads - VRSN - Fresh Concepts - Travel APRW4 - 0049.png</span></td>
+</tr></tbody>
+  </table>
+  <p class="note">Click a thumbnail to open the full-size asset in a new tab. Report saved at this folder's root — relative paths assume you keep it here.</p>
+</div>
+
+<script>
+const tbody = document.querySelector('#findings tbody');
+const rows = Array.from(tbody.querySelectorAll('tr'));
+const ff = document.getElementById('f-folder');
+const fs = document.getElementById('f-severity');
+const fc = document.getElementById('f-category');
+const fq = document.getElementById('f-search');
+function apply() {
+  const folder = ff.value, sev = fs.value, cat = fc.value, q = fq.value.trim().toLowerCase();
+  for (const r of rows) {
+    const okFolder = !folder || r.dataset.folder === folder;
+    const okSev = !sev || r.dataset.severity === sev;
+    const okCat = !cat || r.dataset.category === cat;
+    const okSearch = !q || r.textContent.toLowerCase().includes(q);
+    r.style.display = (okFolder && okSev && okCat && okSearch) ? '' : 'none';
+  }
+}
+[ff, fs, fc].forEach(el => el.addEventListener('change', apply));
+fq.addEventListener('input', apply);
+</script>
+</body>
+</html>
