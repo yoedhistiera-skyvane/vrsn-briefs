@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[vrsn] Pain-Relief Sneaker | Creative Brief JUN W2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#FFFFFF; --fg:#1D1D1D; --surface:#212121; --accent:#B8DE55; --con:#F36D4E; --bg:#F2F0F0;
+  --mid:#555555; --light:#9A9A9A; --border:#E2E0DD; --green:#1A7A4A; --amber:#8A6000;
+  --accent-dim:#EFF7DA; --con-dim:#FDEDE8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Figtree',-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--fg);font-size:14px;line-height:1.7;}
+.page{max-width:920px;margin:0 auto;padding:56px 40px;}
+.hl{font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;}
+
+/* HEADER */
+.header{display:flex;justify-content:space-between;align-items:flex-end;padding:28px;margin-bottom:40px;background:var(--fg);border-radius:16px;color:var(--white);}
+.logo{font-size:38px;font-weight:900;letter-spacing:-1px;color:var(--white);}
+.logo .acc{color:var(--accent);}
+.header-sub{font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;}
+.header-right{text-align:right;}
+.header-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;}
+.pills{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;}
+.pill{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:0.5px;}
+.pill-accent{background:var(--accent);color:var(--fg);}
+.pill-con{background:var(--con);color:var(--fg);}
+.pill-outline{border:1px solid rgba(255,255,255,0.4);color:var(--white);}
+
+/* SUMMARY */
+.summary{display:grid;gap:12px;margin-bottom:48px;}
+.sum-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center;}
+.sum-num{font-size:32px;font-weight:900;color:var(--fg);line-height:1;}
+.sum-label{font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:1px;margin-top:6px;font-weight:600;}
+
+/* SECTION */
+.section{margin-bottom:48px;}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.section-eyebrow::before{content:'';width:10px;height:10px;background:var(--accent);border-radius:2px;}
+.section-eyebrow::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-divider{margin:60px 0 36px;padding:20px 26px;background:var(--surface);color:var(--white);border-radius:14px;border-left:6px solid var(--accent);}
+.section-divider-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.section-divider-title{font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;}
+.section-divider-sub{font-size:12px;opacity:0.75;margin-top:6px;}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:14px;}
+.card-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--border);}
+.card-title{font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:0.02em;color:var(--fg);}
+.badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.badge-accent{background:var(--accent);color:var(--fg);}
+.badge-con{background:var(--con);color:var(--fg);}
+.badge-dark{background:var(--fg);color:var(--white);}
+.badge-soft{background:var(--accent-dim);color:#5E7A00;}
+
+/* INFO BOX */
+.info-box{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--mid);margin-top:12px;}
+.info-box strong{color:var(--fg);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* GUARDRAIL */
+.guardrail{border-radius:10px;padding:16px;border-left:3px solid var(--fg);background:var(--bg);}
+.guardrail.red{border-left-color:var(--con);background:var(--con-dim);}
+.guardrail.green{border-left-color:var(--green);background:#EBF5EF;}
+.guardrail-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;color:var(--fg);}
+.guardrail.red .guardrail-title{color:#C24E33;}
+.guardrail.green .guardrail-title{color:var(--green);}
+ul.glist{list-style:none;padding:0;}
+ul.glist li{font-size:13px;color:var(--mid);padding:5px 0 5px 18px;position:relative;border-bottom:0.5px solid rgba(0,0,0,0.07);line-height:1.5;}
+ul.glist li:last-child{border-bottom:none;}
+ul.glist li::before{content:'→';position:absolute;left:0;color:var(--fg);font-size:11px;top:7px;font-weight:700;}
+
+/* SWATCHES */
+.swatch-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;}
+.swatch{display:flex;align-items:center;gap:10px;}
+.dot{width:30px;height:30px;border-radius:8px;border:1px solid rgba(0,0,0,0.12);flex-shrink:0;}
+.swatch-name{font-size:12px;font-weight:700;color:var(--fg);display:block;}
+.swatch-hex{font-size:11px;color:var(--light);font-family:monospace;}
+
+/* FONT DEMO */
+.font-demo{display:flex;gap:14px;margin-top:12px;}
+.font-card{flex:1;background:var(--surface);border-radius:10px;padding:18px;text-align:center;}
+.font-sample-silka{font-weight:900;text-transform:uppercase;font-size:22px;color:var(--accent);letter-spacing:0.01em;}
+.font-sample-fig{font-family:'Figtree',sans-serif;font-size:16px;font-weight:400;color:var(--white);}
+.font-use{font-size:11px;color:rgba(255,255,255,0.55);margin-top:6px;}
+
+/* PRO/CON BADGES DEMO */
+.pcrow{display:flex;gap:10px;align-items:center;margin-top:12px;}
+.pro-badge{background:var(--accent);color:var(--fg);font-weight:900;font-size:11px;padding:4px 14px;border-radius:20px;text-transform:uppercase;}
+.con-badge{background:var(--con);color:var(--fg);font-weight:900;font-size:11px;padding:4px 14px;border-radius:20px;text-transform:uppercase;}
+.pc-note{font-size:12px;color:var(--mid);}
+
+/* META WARN */
+.meta-warn{background:var(--con-dim);border-left:3px solid var(--con);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--mid);margin-top:12px;}
+.meta-warn strong{color:#C24E33;}
+
+/* SAFE AREA */
+.safe-wrap{display:flex;gap:28px;align-items:flex-start;}
+.phone{width:110px;flex-shrink:0;height:196px;background:#DDD9D2;border-radius:14px;border:1.5px solid #AAA;position:relative;overflow:hidden;}
+.z-danger{position:absolute;left:0;right:0;background:rgba(243,109,78,0.3);}
+.z-safe{position:absolute;left:0;right:0;background:rgba(184,222,85,0.18);border-top:1.5px dashed #5E7A00;border-bottom:1.5px dashed #5E7A00;}
+.z-label{position:absolute;left:0;right:0;text-align:center;font-size:7px;font-weight:700;}
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;}
+.spec-table td{padding:8px 0;border-bottom:0.5px solid var(--border);}
+.spec-table tr:last-child td{border-bottom:none;}
+.spec-key{color:var(--mid);}
+.spec-val{font-weight:700;color:var(--fg);font-family:monospace;font-size:12px;text-align:right;}
+
+/* SCOREBOARD */
+table.score{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+table.score th{background:var(--fg);color:var(--white);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:0.5px;font-weight:700;}
+table.score td{padding:9px 12px;border-bottom:0.5px solid var(--border);}
+table.score tr:nth-child(even) td{background:var(--bg);}
+.tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:0.5px;text-transform:uppercase;}
+.tag-scale{background:var(--accent);color:var(--fg);}
+.tag-fix{background:#FEF3D6;color:var(--amber);}
+.tag-pause{background:var(--con);color:var(--fg);}
+
+/* SYMPHONY TABLE */
+table.sym{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;}
+table.sym th{background:var(--surface);color:var(--white);padding:9px 10px;text-align:left;font-size:10px;letter-spacing:0.5px;font-weight:700;text-transform:uppercase;}
+table.sym td{padding:9px 10px;border-bottom:0.5px solid var(--border);vertical-align:top;line-height:1.5;}
+table.sym tr:nth-child(even) td{background:var(--bg);}
+table.sym .mono{font-family:monospace;font-size:10px;color:var(--mid);}
+table.sym b{color:var(--fg);}
+
+/* ANGLE CARDS */
+.lp-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+.lp-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.lp-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding-bottom:10px;margin-bottom:12px;border-bottom:0.5px solid var(--border);}
+.lp-eyebrow{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#5E7A00;margin-bottom:3px;}
+.lp-name{font-size:16px;font-weight:900;text-transform:uppercase;color:var(--fg);margin-bottom:6px;line-height:1.3;}
+.lp-url{font-family:monospace;font-size:11px;color:var(--fg);word-break:break-all;background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;font-weight:600;}
+.lp-count{font-size:10px;color:var(--light);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.lp-goal{font-size:12px;color:var(--mid);margin-bottom:12px;line-height:1.55;}
+.lp-goal b{color:var(--fg);}
+.lp-headlines{background:var(--bg);border-radius:6px;padding:10px 12px;columns:2;column-gap:20px;}
+.copy-item{font-size:11px;padding:4px 0;line-height:1.45;break-inside:avoid;color:var(--fg);border-bottom:0.5px solid var(--border);}
+
+/* VISUAL SPEC BLOCK */
+.vis-block{margin-top:12px;background:var(--surface);border-radius:8px;padding:14px 16px;}
+.vis-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px;}
+.vis-item{font-size:12px;color:rgba(255,255,255,0.85);padding:4px 0 4px 16px;position:relative;line-height:1.5;}
+.vis-item::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:10px;top:6px;}
+.clone{font-size:11px;color:#5E7A00;font-weight:800;margin-top:10px;text-transform:uppercase;letter-spacing:0.3px;}
+.sym-line{margin-top:10px;background:var(--accent-dim);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--fg);line-height:1.5;}
+.sym-line b{color:#5E7A00;text-transform:uppercase;font-size:10px;letter-spacing:0.5px;}
+
+/* STANDING */
+.standing{background:var(--surface);color:var(--white);border-radius:14px;padding:28px;margin-top:48px;border-left:6px solid var(--accent);}
+.standing h2{font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:14px;}
+.standing p{font-size:13px;line-height:1.7;opacity:0.88;margin-bottom:10px;}
+.standing strong{color:var(--accent);opacity:1;}
+.standing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+.standing-item{background:rgba(255,255,255,0.07);border-radius:8px;padding:12px 14px;}
+.standing-item-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.55;margin-bottom:4px;}
+.standing-item-val{font-size:13px;font-weight:600;}
+
+/* FOOTER */
+.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.footer-brand{font-size:16px;font-weight:900;color:var(--fg);}
+.footer-note{font-size:11px;color:var(--light);}
+@media print{body{background:white;}.page{padding:24px;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="logo"><span class="acc">[</span>vrsn<span class="acc">]</span></div>
+    <div class="header-sub">Pain-Relief Sneaker | Creative Brief JUN W2</div>
+  </div>
+  <div class="header-right">
+    <div class="header-tag">Prepared for Blitzads</div>
+    <div class="pills">
+      <span class="pill pill-outline">Story 9:16</span>
+      <span class="pill pill-accent">200 Total Assets</span>
+      <span class="pill pill-con">JUN W2 Delivery</span>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary" style="grid-template-columns:repeat(4,1fr);">
+  <div class="sum-card"><div class="sum-num">200</div><div class="sum-label">Total Assets</div></div>
+  <div class="sum-card"><div class="sum-num">120</div><div class="sum-label">Sec 1 | Scale Winners</div></div>
+  <div class="sum-card"><div class="sum-num">50</div><div class="sum-label">Sec 2 | Format Expansion</div></div>
+  <div class="sum-card"><div class="sum-num">30</div><div class="sum-label">Sec 3 | New Audiences</div></div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section">
+  <div class="section-eyebrow">Overview</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">200 Assets, 3 Sections, Data-Led</div>
+      <span class="badge badge-dark">Story 9:16 only</span>
+    </div>
+    <div class="two-col" style="font-size:13px;">
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:4px;">Product</div>
+        <div style="color:var(--mid);">vrsn knit pain-relief sneaker. Wide foot-shaped toe box, flexible knit upper, responsive foam outsole. Colorways: Beige, White, Black, Navy.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:4px;">Positioning</div>
+        <div style="color:var(--mid);">The "Just Right" shoe that balances instant comfort with long-term foot health. Protect the foot, then let it work.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:4px;">Proof points (substantiated, confirm before use)</div>
+        <div style="color:var(--mid);">100-day money-back guarantee · No Break-In. Ever. · Podiatrist Approved · wide toe box · 4 colorways. Brand-substantiated claims only. Never invent stats or reviews.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:4px;">Batch goal</div>
+        <div style="color:var(--mid);">Scale proven winners toward target ROAS 1.75 (stretch 2.0). Keep-scaling floor is 1.2. De-risk Travel, test 3 formats, explore 2 adjacent audiences.</div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px;"><strong>How JUN W2 is structured:</strong> built from the Jun 1-7 results. <strong>Section 1 (120)</strong> iterates the exact creatives already beating the 1.2 floor: Travel, Barefoot, Orthotics, Foot Pain. <strong>Section 2 (50)</strong> runs those same winning audiences through three new advertorial formats. <strong>Section 3 (30)</strong> is controlled exploration of two adjacent audiences. No price in creative. No competitor names. No fabricated scores. Every asset is built to continue on its landing page, not just to win the click.</div>
+  </div>
+</div>
+
+<!-- PERFORMANCE -->
+<div class="section">
+  <div class="section-eyebrow">Why this allocation | Jun 1-7 performance</div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Angle Scoreboard</div><span class="badge badge-accent">Target 1.75 · Stretch 2.0</span></div>
+    <table class="score">
+      <tr><th>Angle</th><th>ROAS</th><th>Purchases</th><th>CPA</th><th>CTR</th><th>Decision</th></tr>
+      <tr><td>Barefoot</td><td><b>2.04</b></td><td>9</td><td>$49</td><td>3.5%</td><td><span class="tag tag-scale">Scale</span></td></tr>
+      <tr><td>Travel</td><td><b>1.62</b></td><td>19</td><td>$63</td><td>5.3%</td><td><span class="tag tag-scale">Scale + diversify</span></td></tr>
+      <tr><td>Orthotics Story</td><td>1.42</td><td>10</td><td>$76</td><td>3.9%</td><td><span class="tag tag-scale">Scale</span></td></tr>
+      <tr><td>Foot Pain</td><td>1.26</td><td>16</td><td>$87</td><td>3.9%</td><td><span class="tag tag-scale">Scale, watch margin</span></td></tr>
+      <tr><td>PF Story</td><td>1.17</td><td>9</td><td>$79</td><td><b>5.3%</b></td><td><span class="tag tag-fix">Fix LP, not creative</span></td></tr>
+      <tr><td>Nurse</td><td>0.98</td><td>7</td><td>$101</td><td>3.2%</td><td><span class="tag tag-fix">Evolve to On-Feet</span></td></tr>
+      <tr><td>Legacy PDP / Orthotics Exit / Quiz</td><td>0.5-0.7</td><td>3-5 ea</td><td>$141-172</td><td>2-3%</td><td><span class="tag tag-pause">Pause</span></td></tr>
+      <tr><td>Compare</td><td>0.00</td><td>0</td><td>n/a</td><td>3.8%</td><td><span class="tag tag-pause">Kill, Meta-unsafe</span></td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;"><strong>The fastest ROAS lever is the mix:</strong> running only the four 1.2+ angles lifts blended ROAS from 1.15 to about 1.50 with zero new creative. This batch pushes 1.5 to 1.75 to 2.0 through Barefoot-grade efficiency, de-risking Travel off one hero creative, and tighter ad-to-LP message match (blended LPV to purchase is only 2.5%; winners convert at 3.1-3.2%, losers at 1.8-1.9%).</div>
+  </div>
+</div>
+
+<!-- BRAND SYSTEM -->
+<div class="section">
+  <div class="section-eyebrow">Brand System | from the official brand sheet</div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-title">Typography</div><span class="badge badge-accent">Confirmed</span></div>
+    <div class="font-demo">
+      <div class="font-card">
+        <div class="font-sample-silka">Foot pain ends here.</div>
+        <div class="font-use"><b style="color:var(--white);">Silka Bold</b> | Headlines, section titles, ALL CAPS | Weight 700-900 | Transform: UPPERCASE | All major headlines</div>
+      </div>
+      <div class="font-card">
+        <div class="font-sample-fig">The "Just Right" shoe that balances instant comfort with long-term foot health.</div>
+        <div class="font-use"><b style="color:var(--white);">Figtree Regular</b> | Body copy, subheads, buttons | 400 body · 700 subhead · 900 buttons</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-title">Color Palette</div><span class="badge badge-accent">Confirmed</span></div>
+    <div class="swatch-row">
+      <div class="swatch"><div class="dot" style="background:#FFFFFF;"></div><div><span class="swatch-name">White</span><span class="swatch-hex">#FFFFFF</span></div></div>
+      <div class="swatch"><div class="dot" style="background:#1D1D1D;"></div><div><span class="swatch-name">Foreground</span><span class="swatch-hex">#1D1D1D</span></div></div>
+      <div class="swatch"><div class="dot" style="background:#212121;"></div><div><span class="swatch-name">Dark Surface</span><span class="swatch-hex">#212121</span></div></div>
+      <div class="swatch"><div class="dot" style="background:#B8DE55;"></div><div><span class="swatch-name">Brand Accent</span><span class="swatch-hex">#B8DE55</span></div></div>
+      <div class="swatch"><div class="dot" style="background:#F36D4E;"></div><div><span class="swatch-name">CON / Pain</span><span class="swatch-hex">#F36D4E</span></div></div>
+      <div class="swatch"><div class="dot" style="background:#F2F0F0;"></div><div><span class="swatch-name">Section BG</span><span class="swatch-hex">#F2F0F0</span></div></div>
+    </div>
+    <div class="pcrow">
+      <span class="pro-badge">PRO</span><span class="pc-note">#B8DE55 bg / #1D1D1D text</span>
+      <span class="con-badge" style="margin-left:14px;">CON</span><span class="pc-note">#F36D4E bg / #1D1D1D text</span>
+    </div>
+    <div class="info-box" style="margin-top:12px;"><strong>Color logic in creative:</strong> dark surfaces (#1D1D1D / #212121) or light section BG (#F2F0F0) as the canvas. Accent #B8DE55 marks the GOOD (the vrsn way, PRO, the win). CON #F36D4E marks the PAIN (the problem, the old way, the ache). Use that pairing consistently: pain in coral, relief in lime. One dominant accent per asset.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-header"><div class="card-title">Logo Format</div><span class="badge badge-con">Strict</span></div>
+    <div style="background:var(--surface);border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:30px;font-weight:900;color:var(--white);">[vrsn]</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">Always with brackets. Never VRSN. Never Vrsn. Never vrsn without brackets.</div>
+    </div>
+    <div class="info-box" style="margin-top:12px;"><strong>On product renders:</strong> [vrsn] embossed on the medial sole, same tone as the sole. Last batch the AI rendered (vrsn) with parentheses, red logos, and logos on the upper. All of those are rejects.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="guardrail red">
+      <div class="guardrail-title">AI Generation | Strictly Enforced (from last QA)</div>
+      <ul class="glist">
+        <li>Product 1:1 with reference photos: knit upper, EXACTLY 4 lace eyelets, wide toe box, low-top silhouette</li>
+        <li>Correct colorways: Beige (tan upper / white sole), White (all white, cream sole edge), Black (ALL black incl sole), Navy (navy upper / white sole)</li>
+        <li>No AI artifacts: no 5 eyelets, no canvas or Vans look, no warped sole, no garbled side stitching</li>
+        <li>Clean anatomy: 5 toes per foot, 5 fingers per hand</li>
+        <li>No leaked prompt text in the image. If the render is off, regenerate. Do not ship.</li>
+      </ul>
+    </div>
+    <div class="guardrail">
+      <div class="guardrail-title">General Rules</div>
+      <ul class="glist">
+        <li>No em dashes or en dashes in any copy, anywhere</li>
+        <li>Numerals in headlines: "4 colors" not "four"</li>
+        <li>Headlines in Silka Bold ALL CAPS. Body in Figtree</li>
+        <li>No price anywhere in creative this batch</li>
+        <li>One dominant message per asset</li>
+        <li>Premium, minimal, calm. Never loud or salesy</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- META SAFETY -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-header"><div class="card-title">Meta Ad Policy | Safe But Strong</div><span class="badge badge-con">Mandatory. Compare batch was 100% flagged</span></div>
+    <div class="two-col">
+      <div class="guardrail red">
+        <div class="guardrail-title">Do NOT use</div>
+        <ul class="glist">
+          <li>Competitor brand names or logos (Kuru, Hoka, Orthofeet, any real brand). This killed the entire Compare batch</li>
+          <li>Fabricated scores, rankings, "we tested 4," "Editor's Choice," star-rating charts</li>
+          <li>Invented stats or percentages not substantiated by the brand</li>
+          <li>"ENDS / CURES / FIXES / TREATS" a condition in AD copy. "Foot Pain Ends Here" is the LP hero, it is NOT a Meta-safe ad headline. In ads, soften to comfort and relief observations</li>
+          <li>Personal-attribute call-outs: "your plantar fasciitis," "do your feet hurt," "are you in pain"</li>
+          <li>Person before/after implying a health transformation</li>
+          <li>Fake health-assessment hooks ("Free Foot Health Analysis")</li>
+        </ul>
+      </div>
+      <div class="guardrail green">
+        <div class="guardrail-title">DO use</div>
+        <ul class="glist">
+          <li>Observational, universal framing: "the ache that shows up by 4pm," not "your foot pain"</li>
+          <li>Product truth: wide toe box, knit upper, foam outsole, no break-in, 4 colorways</li>
+          <li>Real substantiated proof: 100-day money-back guarantee, No Break-In Ever, Podiatrist Approved (confirm substantiation)</li>
+          <li>Product-only comparison: narrow tapered shoe vs the vrsn shape, never a named brand</li>
+          <li>Real, verifiable customer testimonials with star emoji</li>
+          <li>The "instant comfort + long-term foot health" balance story</li>
+        </ul>
+      </div>
+    </div>
+    <div class="meta-warn"><strong>This is health-adjacent advertising.</strong> The brand line "FOOT PAIN ENDS HERE" lives on the landing page where it belongs. Ad-side, every line must read as comfort, fit, or all-day-wear observation, never a medical promise. If a headline could be read as "this product treats a condition," rewrite it before it ships.</div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-header"><div class="card-title">Risk Reducer | 100-Day Guarantee</div><span class="badge badge-accent">The CTA backstop</span></div>
+    <p style="font-size:13px;color:var(--mid);">The 100-day money-back guarantee and "No Break-In. Ever." are the strongest substantiated closers vrsn has. Use them as the risk-reducing line on testimonial and direct-response assets ("Try them for 100 days. Send them back if your feet disagree."). This replaces price as the value cue, since no price runs in creative this batch.</p>
+  </div>
+
+  <!-- NAMING -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-header"><div class="card-title">File Naming Convention</div><span class="badge badge-dark">Required on every asset</span></div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:10px;">Each angle runs in its own CBO campaign / ad set. The token maps every asset to the right ad set and the right LP, and is how we read what won. Be strict.</p>
+    <div style="font-family:monospace;font-size:13px;color:var(--fg);background:var(--accent-dim);border-radius:8px;padding:14px;line-height:1.8;">
+      Blitzads - VRSN - [Section] - [Angle] [Format?] JUNW2 - [number]
+    </div>
+    <div class="two-col" style="margin-top:12px;font-size:12px;">
+      <div style="background:var(--bg);border-radius:8px;padding:12px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:6px;">Tokens</div>
+        <div style="color:var(--mid);line-height:1.7;">Section: Scale / Format / NewAud<br>Angle: Travel, Barefoot, Orthotics, FootPain, WideFeet, OnFeet<br>Format (Sec 2 only): Testimonial, Listicle, OldVsNew</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light);margin-bottom:6px;">Worked examples</div>
+        <div style="color:var(--mid);line-height:1.7;font-family:monospace;font-size:11px;">
+          Blitzads - VRSN - Scale - Travel JUNW2 - 001<br>
+          Blitzads - VRSN - Format - Barefoot Testimonial JUNW2 - 012<br>
+          Blitzads - VRSN - NewAud - WideFeet JUNW2 - 005
+        </div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:12px;"><strong>Reset numbering to 001 at the start of each section.</strong> An asset named wrong cannot be measured.</div>
+  </div>
+</div>
+
+<!-- SAFE AREA -->
+<div class="section">
+  <div class="section-eyebrow">Safe Area | Mandatory</div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Story 9:16 Safe Zone</div><span class="badge badge-dark">1080 x 1920px</span></div>
+    <div class="safe-wrap">
+      <div>
+        <div class="phone">
+          <div class="z-danger" style="top:0;height:25px;"><div class="z-label" style="top:7px;color:#C24E33;">DANGER</div></div>
+          <div class="z-safe" style="top:25px;height:146px;"><div class="z-label" style="top:65px;color:#5E7A00;">SAFE ZONE</div></div>
+          <div class="z-danger" style="bottom:0;height:25px;"><div class="z-label" style="top:7px;color:#C24E33;">DANGER</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--light);text-align:center;margin-top:6px;">Not to scale</div>
+      </div>
+      <div style="flex:1;">
+        <table class="spec-table">
+          <tr><td class="spec-key">Top safe boundary</td><td class="spec-val">y = 250px</td></tr>
+          <tr><td class="spec-key">Bottom safe boundary</td><td class="spec-val">y = 1600px</td></tr>
+          <tr><td class="spec-key">Left / right margins</td><td class="spec-val">64px each side</td></tr>
+          <tr><td class="spec-key">Top 250px</td><td class="spec-val">Leave clear, IG UI</td></tr>
+          <tr><td class="spec-key">Bottom 320px</td><td class="spec-val">Leave clear, caption + reply bar</td></tr>
+        </table>
+        <div class="info-box" style="margin-top:12px;">Keep the key message and the [vrsn] logo inside the safe zone. If assets may be reused at 4:5 or 1:1, keep the core message centered so it survives the crop.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SYMPHONY -->
+<div class="section">
+  <div class="section-eyebrow">Ad-to-LP Symphony | the conversion contract</div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Ads → LP → Add to Cart → Checkout → Buy</div><span class="badge badge-con">Read before writing a single headline</span></div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:10px;">A click is a promise. The LP must keep that promise in the first screen, or the click dies and CPA rises. Last period proved it: PF had the best CTR (5.3%) and weak ROAS (1.17) because the ad promise and the page experience did not match. Every asset in this batch follows the contract below.</p>
+    <table class="sym">
+      <tr><th>Angle</th><th>The promise the ad makes</th><th>What the LP must pay off first-screen</th><th>One continuous thread</th></tr>
+      <tr>
+        <td><b>Travel</b><br><span class="mono">get.vrsn.co/travel</span></td>
+        <td>"One pair handles your whole trip in comfort"</td>
+        <td>Travel-context hero (walking a city / packed shoe), the one-pair story, guarantee visible early</td>
+        <td>Ad shows the 20,000-step day → LP opens on the same scene and proves it → product → guarantee → cart</td>
+      </tr>
+      <tr>
+        <td><b>Barefoot</b><br><span class="mono">get.vrsn.co/barefoot</span></td>
+        <td>"Barefoot freedom without the punishment"</td>
+        <td>Toe-splay / wide-toe-box hero, "the middle path" framing, the protection difference</td>
+        <td>Ad shows the toe room → LP explains why barefoot backfires and how vrsn fixes the dose → cart</td>
+      </tr>
+      <tr>
+        <td><b>Orthotics</b><br><span class="mono">get.vrsn.co/orthotics-exit</span></td>
+        <td>"Support that builds strength instead of dependence"</td>
+        <td>The dependency story, progressive vs passive support, the off-ramp plan</td>
+        <td>Ad names the insert cycle → LP walks the exit story → guarantee de-risks trying → cart</td>
+      </tr>
+      <tr>
+        <td><b>Foot Pain</b><br><span class="mono">get.vrsn.co/foot-pain</span></td>
+        <td>"The end-of-day ache has a fixable cause"</td>
+        <td>The 4pm-ache story, the mechanism (shoe does too much, foot weakens), relief + strength</td>
+        <td>Ad mirrors the evening ache moment → LP explains the cause → product as the fix → cart</td>
+      </tr>
+      <tr>
+        <td><b>WideFeet</b><br><span class="mono">get.vrsn.co/barefoot</span> <span style="color:var(--light);">(or wide-fit LP if available)</span></td>
+        <td>"Finally a shoe shaped like your foot"</td>
+        <td>Wide toe box hero front and center, fit story before anything else</td>
+        <td>Ad shows width → LP leads with the foot-shaped fit → size confidence + guarantee → cart</td>
+      </tr>
+      <tr>
+        <td><b>OnFeet</b><br><span class="mono">get.vrsn.co/foot-pain</span> <span style="color:var(--light);">(or on-feet LP if available)</span></td>
+        <td>"Built for people who stand all day"</td>
+        <td>Work-shift context, hour-eight story, all-day comfort proof</td>
+        <td>Ad shows the shift → LP speaks to standing work → no break-in + guarantee → cart</td>
+      </tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;"><strong>Three rules that protect conversion:</strong> (1) The ad may not promise anything the LP does not deliver above the fold; if the LP cannot pay it off, change the ad, not the promise. (2) Tone continuity: dark-surface ads land best on story LPs that open dark; match the visual temperature so the click does not feel like a site-switch. (3) The CTA verb on the ad ("Read the story") must match what actually happens (an advertorial), never "Shop now" into an article. Intent built in the ad must be spent on the page, not reset.</div>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section-divider">
+  <div class="section-divider-eyebrow">Section 1 | 120 Assets | Priority</div>
+  <div class="section-divider-title">Scale The Winners</div>
+  <div class="section-divider-sub">Clone the exact creatives already beating the 1.2 floor. Change ONE variable per variation: hook line, opening visual, testimonial, or colorway. Static 9:16. Naming token: Scale.</div>
+</div>
+
+<div class="section">
+  <div class="section-eyebrow">Proven Winners | Section 1</div>
+  <div class="info-box" style="margin-bottom:18px;"><strong>Job of this section:</strong> do more of exactly what worked. Headlines below are written to hook AND to qualify: each one filters for a buyer with the problem, not just a curious scroller. No price, no competitor, no fabricated claims, no em dashes.</div>
+
+  <div class="lp-grid">
+
+    <!-- TRAVEL -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Angle 01 | Travel | token: Travel</div>
+          <div class="lp-name">All-Day Walking / Travel</div>
+          <span class="lp-url">get.vrsn.co/travel</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">42 assets</span></div>
+      </div>
+      <div class="lp-goal">Most volume (19 purchases) and strongest hook (5.3% CTR), but <b>$945 of $1,197 rode on ONE creative (0025)</b>. Priority one is diversifying before 0025 fatigues. 0034 hit 4.46 ROAS at small spend, expand that lane. Anchor: one pair for the whole trip, light, packs flat, breathable, no break-in.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"THE ONLY PAIR YOUR CARRY-ON NEEDS"</div>
+        <div class="copy-item">"20,000 STEPS. ZERO REGRETS."</div>
+        <div class="copy-item">"AIRPORT TO DINNER. SAME SHOES."</div>
+        <div class="copy-item">"PACK ONE PAIR. WALK THE WHOLE CITY."</div>
+        <div class="copy-item">"THE SHOE THAT SURVIVES DAY 4 OF THE TRIP"</div>
+        <div class="copy-item">"NO BREAK-IN. WEAR THEM OFF THE PLANE."</div>
+        <div class="copy-item">"COBBLESTONES, TERMINALS, ALL OF IT"</div>
+        <div class="copy-item">"BUILT FOR THE LONG WAY BACK"</div>
+        <div class="copy-item">"LIGHT IN THE BAG. STRONG ON THE STREET."</div>
+        <div class="copy-item">"THE LAST TRAVEL SHOE DECISION YOU MAKE"</div>
+        <div class="copy-item">"YOUR FEET STILL WORK AT MILE 8"</div>
+        <div class="copy-item">"ONE PAIR. EVERY STEP. EVERY CITY."</div>
+        <div class="copy-item">"100 DAYS TO TEST IT ON A REAL TRIP"</div>
+        <div class="copy-item">"BREATHES THROUGH THE WARM AFTERNOONS"</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | make it unmistakably Travel in the first second</div>
+        <div class="vis-item">Hero A "The Walk": on-foot tracking shot feel, walking a European-style street or cobblestones, shoe sharp in frame, city softly blurred. Dark or golden-hour grade.</div>
+        <div class="vis-item">Hero B "The Pack": top-down carry-on flat-lay, vrsn packed flat beside passport and essentials. Bone or #F2F0F0 background, one lime accent arrow to the shoe.</div>
+        <div class="vis-item">Hero C "Airport to Dinner": split frame, same shoes in terminal vs at a dinner table. PRO badge (#B8DE55) on both halves: "SAME PAIR."</div>
+        <div class="vis-item">Headline top third in Silka Bold caps, white or lime on dark. Product always the real 4-eyelet knit shoe from reference.</div>
+        <div class="vis-item">Logo [vrsn] bottom center inside safe zone. One message per asset.</div>
+      </div>
+      <div class="clone">Clone from: travel 0025 (hero) + 0034 (4.46 ROAS). De-risk the single-creative dependency.</div>
+      <div class="sym-line"><b>Symphony:</b> Ad promises "one pair, whole trip in comfort" → LP opens on the same travel story and proves it → guarantee ("test it on a real trip, 100 days") → cart. CTA verb: "Read the story" or "See the travel test."</div>
+    </div>
+
+    <!-- BAREFOOT -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Angle 02 | Barefoot | token: Barefoot</div>
+          <div class="lp-name">Natural Movement + Protection</div>
+          <span class="lp-url">get.vrsn.co/barefoot</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">38 assets</span></div>
+      </div>
+      <div class="lp-goal">Best ROAS (2.04) and lowest CPA ($49), already at the stretch goal, so it gets the hardest push. Anchor: wide toe box, barefoot benefits without the punishment, flexible knit, builds strength, no break-in.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"BAREFOOT FREEDOM. REAL PROTECTION."</div>
+        <div class="copy-item">"ROOM FOR EVERY TOE"</div>
+        <div class="copy-item">"THE TOE BOX YOUR FEET KEEP ASKING FOR"</div>
+        <div class="copy-item">"BAREFOOT HAD THE RIGHT IDEA. THIS IS THE WEARABLE VERSION."</div>
+        <div class="copy-item">"LET THE TOES SPREAD AGAIN"</div>
+        <div class="copy-item">"FEEL THE GROUND. NOT THE GRAVEL."</div>
+        <div class="copy-item">"FOOT-SHAPED. NOT SHOE-SHAPED."</div>
+        <div class="copy-item">"WIDE WHERE THE TOES ARE"</div>
+        <div class="copy-item">"THE MINIMALIST FEEL, MINUS THE PUNISHMENT"</div>
+        <div class="copy-item">"FLEXIBLE KNIT. FOOT-SHAPED FIT."</div>
+        <div class="copy-item">"STRENGTH YOU BUILD JUST BY WALKING"</div>
+        <div class="copy-item">"NO BREAK-IN. NO PUNISHMENT."</div>
+        <div class="copy-item">"TRIED BAREFOOT SHOES? THIS IS THE MIDDLE PATH."</div>
+        <div class="copy-item">"100 DAYS TO LET YOUR TOES DECIDE"</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | width and flexibility must be visible, not stated</div>
+        <div class="vis-item">Hero A "Toe Splay": top-down bare foot beside the vrsn silhouette, toes naturally spread, lime outline tracing the matching width. Anatomy must be perfect: 5 toes.</div>
+        <div class="vis-item">Hero B "The Bend": hands flexing the shoe to show sole flexibility. Dark surface (#212121), shoe in Beige or White for contrast, lime arc tracing the bend.</div>
+        <div class="vis-item">Hero C "Shape vs Shape": product-only outline comparison, narrow tapered generic silhouette (coral #F36D4E outline) vs vrsn foot-shape (lime outline). NO brand names on the narrow shoe.</div>
+        <div class="vis-item">Headline in Silka caps. PRO/CON badge pair where the contrast layout is used.</div>
+        <div class="vis-item">Knit texture close-up as a secondary detail frame. Real 4-eyelet product only.</div>
+      </div>
+      <div class="clone">Clone from: barefoot 007 (7 purchases) + 0050 (3.49 ROAS).</div>
+      <div class="sym-line"><b>Symphony:</b> Ad shows the toe room and the middle-path promise → LP explains why pure barefoot backfires and how vrsn fixes the dose → guarantee → cart. CTA verb: "Read why barefoot backfires."</div>
+    </div>
+
+    <!-- ORTHOTICS -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Angle 03 | Orthotics | token: Orthotics</div>
+          <div class="lp-name">Orthotic Dependency / Builds Strength</div>
+          <span class="lp-url">get.vrsn.co/orthotics-exit</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">24 assets</span></div>
+      </div>
+      <div class="lp-goal">Solid 1.42 ROAS, clear persona: long-time insert users who suspect the dependency. Anchor: progressive support vs propping up, the off-ramp, support that builds strength. Observational, never a medical claim.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"SUPPORT THAT BUILDS. NOT BABIES."</div>
+        <div class="copy-item">"THE OFF-RAMP FROM ORTHOTICS"</div>
+        <div class="copy-item">"BUILT TO MAKE THE INSERT OPTIONAL"</div>
+        <div class="copy-item">"PROP UP LESS. BUILD UP MORE."</div>
+        <div class="copy-item">"THE SHOE THAT LETS THE FOOT DO ITS JOB"</div>
+        <div class="copy-item">"YOUR ARCH IS A SPRING. LET IT WORK."</div>
+        <div class="copy-item">"NOBODY PLANS YOUR EXIT FROM INSERTS. THIS IS IT."</div>
+        <div class="copy-item">"SUPPORT YOU WEAR ALL DAY, FROM DAY ONE"</div>
+        <div class="copy-item">"WHAT SUPPORT SHOULD ACTUALLY DO"</div>
+        <div class="copy-item">"HOLD THE FOOT. DO NOT REPLACE IT."</div>
+        <div class="copy-item">"STRONGER FEET, ONE ORDINARY DAY AT A TIME"</div>
+        <div class="copy-item">"THE INSERT RETIRES. THE FOOT TAKES OVER."</div>
+        <div class="copy-item">"100 DAYS TO FEEL THE DIFFERENCE"</div>
+        <div class="copy-item">"NO BREAK-IN. ALL-DAY SUPPORT."</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | the dependency story told in objects, never in medical imagery</div>
+        <div class="vis-item">Hero A "The Drawer": an orthotic insert resting in an open drawer, the vrsn shoe by the door, warm morning light. Caption-level line: "Where the insert ends up."</div>
+        <div class="vis-item">Hero B "Two Kinds of Support": split layout, rigid molded insert (CON badge, coral) vs flexible vrsn sole being bent (PRO badge, lime). Product-only, no brands.</div>
+        <div class="vis-item">Hero C "The Spring": side-profile shoe with a subtle lime arc tracing the arch line, dark surface, single-line headline above.</div>
+        <div class="vis-item">Never show feet in pain, clinics, podiatry tools, or x-rays. Objects and product carry the story.</div>
+        <div class="vis-item">Silka caps headline, Figtree one-line support text, [vrsn] in safe zone.</div>
+      </div>
+      <div class="clone">Clone from: orthotics 0024 (7 purchases) + 0017 (3.14 ROAS).</div>
+      <div class="sym-line"><b>Symphony:</b> Ad names the insert dependency cycle → LP walks the exit story step by step → guarantee de-risks trying ("100 days, decide on your own feet") → cart. CTA verb: "Read the exit story."</div>
+    </div>
+
+    <!-- FOOT PAIN -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Angle 04 | Foot Pain | token: FootPain</div>
+          <div class="lp-name">End-of-Day Relief (observational)</div>
+          <span class="lp-url">get.vrsn.co/foot-pain</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">16 assets</span></div>
+      </div>
+      <div class="lp-goal">High volume (16 purchases) but thin margin (1.26). Iterate winners only, watch efficiency. Anchor: the end-of-day ache as a shoe problem, relief today plus stronger feet over time. Observational only, no "your pain," no medical promise, no "ends/cures."</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"THE 4PM ACHE IS USUALLY A SHOE PROBLEM"</div>
+        <div class="copy-item">"TIRED FEET BEFORE THE DAY IS DONE? READ THIS."</div>
+        <div class="copy-item">"COMFORT THAT LASTS PAST HOUR 8"</div>
+        <div class="copy-item">"THE FIX THAT IS NOT ANOTHER INSOLE"</div>
+        <div class="copy-item">"RELIEF TODAY. STRONGER FEET OVER TIME."</div>
+        <div class="copy-item">"BUILT FOR PEOPLE ON THEIR FEET ALL DAY"</div>
+        <div class="copy-item">"ACHING ARCHES BY EVENING START WITH THE SHOE"</div>
+        <div class="copy-item">"MADE FOR THE BACK HALF OF THE DAY"</div>
+        <div class="copy-item">"YOUR SHOES. NOT YOUR AGE."</div>
+        <div class="copy-item">"SOFT ENOUGH FOR NOW. BUILT FOR THE LONG RUN."</div>
+        <div class="copy-item">"THE EVENING SHOULD NOT START WITH SORE FEET"</div>
+        <div class="copy-item">"INSTANT COMFORT. LONG-TERM FOOT HEALTH."</div>
+        <div class="copy-item">"100 DAYS TO FEEL THE DIFFERENCE"</div>
+        <div class="copy-item">"NO BREAK-IN. EVER."</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | the relatable evening moment, never a person in pain</div>
+        <div class="vis-item">Hero A "End of Day": shoes by the door at dusk, warm interior light, calm relief mood. Headline carries the story.</div>
+        <div class="vis-item">Hero B "The Long Day": on-feet montage frame (standing at work, errands, kitchen) ending on the vrsn shoe. Observational, neutral faces or no faces.</div>
+        <div class="vis-item">Hero C "Just Right": product hero on dark surface with the brand's PRO/CON balance motif: too soft (CON), too hard (CON), just right (PRO, lime).</div>
+        <div class="vis-item">No grimacing, no rubbing feet, no red pain glows on the body, no clinical imagery. Mood is relief, not suffering.</div>
+        <div class="vis-item">Silka caps headline top third, product bottom two thirds, logo in safe zone.</div>
+      </div>
+      <div class="clone">Clone from: foot-pain 028, 033, 026.</div>
+      <div class="sym-line"><b>Symphony:</b> Ad mirrors the end-of-day ache moment → LP explains the mechanism (the shoe does too much, the foot weakens) → relief + strength promise → guarantee → cart. CTA verb: "Read why feet ache by 4pm."</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section-divider">
+  <div class="section-divider-eyebrow">Section 2 | 50 Assets</div>
+  <div class="section-divider-title">Format Expansion</div>
+  <div class="section-divider-sub">The proven audiences (Travel, Barefoot, Orthotics) through three advertorial formats. A clean A/B of format on audiences we know convert. Naming token: Format + format token.</div>
+</div>
+
+<div class="section">
+  <div class="section-eyebrow">Format Expansion | Section 2</div>
+  <div class="info-box" style="margin-bottom:18px;"><strong>Same proven audiences, three new structures.</strong> Copy for all three formats already exists in the vrsn ad-copy docs. Split: Travel 18, Barefoot 18, Orthotics 14. Each asset drives to its angle's LP, listed on every card below.</div>
+
+  <div class="lp-grid">
+
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Format A | token: Testimonial</div>
+          <div class="lp-name">Testimonial Led</div>
+          <span class="lp-url">Travel → get.vrsn.co/travel · Barefoot → get.vrsn.co/barefoot · Orthotics → get.vrsn.co/orthotics-exit</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">18 assets</span></div>
+      </div>
+      <div class="lp-goal">Structure: a 5-star testimonial that names the problem, the switch, and the result, then a one-line hook, 3-4 USP bullets with emoji, one objection buster, and a risk-reducing CTA built on the 100-day guarantee. <b>Testimonials must be real and verifiable before launch.</b></div>
+      <div class="lp-headlines">
+        <div class="copy-item">⭐⭐⭐⭐⭐ + real review: problem → switch → result</div>
+        <div class="copy-item">✅ Wide toe box, toes finally spread</div>
+        <div class="copy-item">✅ Flexible knit, moves with the foot</div>
+        <div class="copy-item">✅ Foam sole, protected not punished</div>
+        <div class="copy-item">✅ No break-in, all-day from day one</div>
+        <div class="copy-item">Objection buster: "Worried it is too minimal? It keeps real protection."</div>
+        <div class="copy-item">CTA: "TRY THEM 100 DAYS. YOUR FEET DECIDE."</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction</div>
+        <div class="vis-item">Review-card layout: white card on dark surface (#212121), star emoji row on top, quote in Figtree, name + verified mark.</div>
+        <div class="vis-item">Product or on-foot shot behind or beside the card, matching the angle (travel scene / toe-splay / insert drawer).</div>
+        <div class="vis-item">USP bullets with ✅ emoji, guarantee line in lime as the closer.</div>
+      </div>
+      <div class="sym-line"><b>Symphony:</b> Ad testimonial names the same problem the LP opens with → LP carries more proof and the full story → guarantee repeats at cart. The reviewer's problem must match the angle of the LP it drives to.</div>
+    </div>
+
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Format B | token: Listicle</div>
+          <div class="lp-name">Problem / Solution Listicle</div>
+          <span class="lp-url">Barefoot → get.vrsn.co/barefoot · Orthotics → get.vrsn.co/orthotics-exit · Travel → get.vrsn.co/travel</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">16 assets</span></div>
+      </div>
+      <div class="lp-goal">Three problems with the old way, each paired with the vrsn fix. Numbered, scannable, calm. Strongest for Barefoot and Orthotics where the "why it failed before" story is sharp.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"3 REASONS BAREFOOT SHOES BACKFIRE"</div>
+        <div class="copy-item">1. No protection → vrsn keeps a real sole</div>
+        <div class="copy-item">2. Too much too soon → wearable from day one</div>
+        <div class="copy-item">3. Hard to live in → clean shoe, 4 colors</div>
+        <div class="copy-item">"WHY THE INSERT KEEPS YOU DEPENDENT"</div>
+        <div class="copy-item">"3 THINGS THAT WRECK FEET ON A TRIP"</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction</div>
+        <div class="vis-item">Numbered stack layout on #F2F0F0, problems tagged with coral CON badges, fixes tagged with lime PRO badges.</div>
+        <div class="vis-item">Small product or icon per point, headline in Silka caps at top.</div>
+        <div class="vis-item">No fabricated stats anywhere in the list.</div>
+      </div>
+      <div class="sym-line"><b>Symphony:</b> The 3 problems in the ad are the same 3 problems the LP advertorial walks through in depth. The reader clicks to get the full version of the list they already started.</div>
+    </div>
+
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Format C | token: OldVsNew</div>
+          <div class="lp-name">Old Way vs New Way</div>
+          <span class="lp-url">Orthotics → get.vrsn.co/orthotics-exit · Travel → get.vrsn.co/travel · Barefoot → get.vrsn.co/barefoot</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">16 assets</span></div>
+      </div>
+      <div class="lp-goal">Two-column contrast: the old way (pile on cushion / prop up the arch / pack three pairs) vs the new way (protect then let the foot work / one pair). Product-only contrast, never a named competitor.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"OLD WAY: MORE SHOE. NEW WAY: MORE FOOT."</div>
+        <div class="copy-item">"OLD WAY: PROP THE ARCH. NEW WAY: BUILD IT."</div>
+        <div class="copy-item">"OLD WAY: PACK 3 PAIRS. NEW WAY: PACK 1."</div>
+        <div class="copy-item">"OLD WAY: DEPEND ON THE INSERT. NEW WAY: OUTGROW IT."</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction</div>
+        <div class="vis-item">Clean split-screen: old way side dark/desaturated with coral CON badge, new way side with the vrsn product and lime PRO badge.</div>
+        <div class="vis-item">Generic unbranded products only on the old side (bulky foam shoe silhouette, rigid insert, three packed pairs).</div>
+        <div class="vis-item">One contrast per asset. Headline pair in Silka caps, one line each side.</div>
+      </div>
+      <div class="sym-line"><b>Symphony:</b> The contrast in the ad is the thesis of the LP. The LP opens by expanding the same old-vs-new argument, so the click feels like chapter two, not a new pitch.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section-divider">
+  <div class="section-divider-eyebrow">Section 3 | 30 Assets</div>
+  <div class="section-divider-title">New Audiences</div>
+  <div class="section-divider-sub">Two adjacent audiences that branch off proven wins. Each runs in its own ad set. Creative must be unmistakably audience-specific in the first second. Naming token: NewAud.</div>
+</div>
+
+<div class="section">
+  <div class="section-eyebrow">New Audience Briefs | Section 3</div>
+  <div class="info-box" style="margin-bottom:18px;"><strong>These branch off what already worked,</strong> not random bets. Wide-Feet extends Barefoot's toe-box win. On-Feet extends the Nurse angle to every standing job. Observational and occupational, never medical.</div>
+
+  <div class="lp-grid">
+
+    <!-- WIDE FEET -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Audience 01 | Wide Feet | token: WideFeet</div>
+          <div class="lp-name">Wide Feet / Roomy Toe Box</div>
+          <span class="lp-url">get.vrsn.co/barefoot (use a wide-fit LP if available)</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">15 assets</span></div>
+      </div>
+      <div class="lp-goal">A buyer who self-identifies instantly: people with wide feet who size up, hate narrow shoes, get pinched at the little toe. High intent because the problem is concrete and the fix is visible. Anchor: foot-shaped width, room without sizing up, normal-looking shoe. No bunion or medical claims.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"FINALLY, ROOM WHERE THE TOES NEED IT"</div>
+        <div class="copy-item">"WIDE FEET? STOP SIZING UP."</div>
+        <div class="copy-item">"WIDTH. NOT A SIZE UP."</div>
+        <div class="copy-item">"FOR FEET THE NARROW ONES NEVER FIT"</div>
+        <div class="copy-item">"WIDE-FRIENDLY. NOT ORTHOPEDIC-LOOKING."</div>
+        <div class="copy-item">"WHERE THE LITTLE TOE FINALLY FITS"</div>
+        <div class="copy-item">"BUILT FOOT-SHAPED. WIDE FEET FEEL IT FIRST."</div>
+        <div class="copy-item">"TOE ROOM THAT DOES NOT COST YOU STYLE"</div>
+        <div class="copy-item">"ROOM FOR THE FOOT YOU ACTUALLY HAVE"</div>
+        <div class="copy-item">"THE ROOMY TOE BOX, IN 4 CLEAN COLORS"</div>
+        <div class="copy-item">"NO MORE PINCH AT THE PINKY TOE"</div>
+        <div class="copy-item">"100 DAYS TO LET WIDE FEET DECIDE"</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | width readable in the first second</div>
+        <div class="vis-item">Hero A "Top-Down Truth": top-down foot with naturally spread toes over the vrsn outline, lime trace showing the match. Perfect anatomy required.</div>
+        <div class="vis-item">Hero B "Shape Test": vrsn silhouette over a narrow tapered generic silhouette (coral outline), product-only, no brand on the narrow shoe.</div>
+        <div class="vis-item">Hero C "The Fit": on-foot shot emphasizing the forefoot width, knit flexing at the toes, clean #F2F0F0 background.</div>
+        <div class="vis-item">Headline in Silka caps, one width message per asset.</div>
+      </div>
+      <div class="sym-line"><b>Symphony:</b> Ad shows the width → LP must lead with the foot-shaped fit story before anything else → size confidence plus the 100-day guarantee answer the "will it fit ME" doubt → cart.</div>
+    </div>
+
+    <!-- ON FEET -->
+    <div class="lp-card">
+      <div class="lp-card-header">
+        <div>
+          <div class="lp-eyebrow">Audience 02 | On-Feet Workers | token: OnFeet</div>
+          <div class="lp-name">On-Feet-All-Day Professionals</div>
+          <span class="lp-url">get.vrsn.co/foot-pain (use an on-feet LP if available)</span>
+        </div>
+        <div class="lp-count"><span class="badge badge-dark">15 assets</span></div>
+      </div>
+      <div class="lp-goal">Evolves the breakeven Nurse angle into every standing job: nurses, teachers, retail, hospitality, warehouse. Occupational framing, not health. The shared identity is "I do not get to sit down at work." Anchor: the shift, hour eight, hard floors, no break-in.</div>
+      <div class="lp-headlines">
+        <div class="copy-item">"FOR THE JOBS THAT KEEP YOU ON YOUR FEET"</div>
+        <div class="copy-item">"HOUR 8 SHOULD NOT FEEL LIKE HOUR 12"</div>
+        <div class="copy-item">"MADE FOR THE SHIFT. NOT THE SHOWROOM."</div>
+        <div class="copy-item">"STANDING ALL DAY DESERVES A BETTER SHOE"</div>
+        <div class="copy-item">"THE SHOE THAT OUTLASTS A DOUBLE"</div>
+        <div class="copy-item">"FOR PEOPLE WHO DO NOT GET TO SIT DOWN"</div>
+        <div class="copy-item">"WHEN THE JOB IS MEASURED IN STEPS"</div>
+        <div class="copy-item">"ALL-DAY FLOORS. ALL-DAY COMFORT."</div>
+        <div class="copy-item">"BUILT FOR THE BACK HALF OF THE SHIFT"</div>
+        <div class="copy-item">"NURSES. TEACHERS. RETAIL. HOSPITALITY."</div>
+        <div class="copy-item">"COMFORT THAT CLOCKS OUT WHEN YOU DO"</div>
+        <div class="copy-item">"NO BREAK-IN. JUST CLOCK IN."</div>
+      </div>
+      <div class="vis-block">
+        <div class="vis-title">Visual direction | the work context carries the targeting</div>
+        <div class="vis-item">Hero A "The Shift": on-foot in a generic work corridor / shop floor / kitchen, motion blur of the workday around a sharp shoe. No employer logos, no branded uniforms.</div>
+        <div class="vis-item">Hero B "Clock In": shoe beside a time-clock or break-room cue, headline does the occupational targeting.</div>
+        <div class="vis-item">Hero C "Hour 8": dark surface, big Silka "HOUR 8" numeral treatment, product below, lime accent on the 8.</div>
+        <div class="vis-item">Observational, never an injury or health claim. The mood is endurance and respect for the work, not suffering.</div>
+      </div>
+      <div class="sym-line"><b>Symphony:</b> Ad shows the shift → LP speaks to standing work and hard floors in the first screen → no break-in plus the guarantee close it → cart. If the foot-pain LP opens too generic, prioritize an on-feet LP variant.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STANDING -->
+<div class="standing">
+  <h2>Standing Instruction for Blitzads</h2>
+  <p><strong>This batch is about doing more of what worked.</strong> Section 1 is the priority. Clone the proven winners and change one variable at a time. The single most important fix is diversifying Travel, currently carried by one creative (0025).</p>
+  <p><strong>The ad and the LP are one product.</strong> Every asset promises only what its landing page pays off above the fold, matches its visual temperature, and uses a CTA verb that tells the truth about what the click opens. Intent built in the ad must be spent on the page, not reset. The funnel is Ads → LP → Add to Cart → Checkout → Buy, and the asset is judged on the whole chain, not the click.</p>
+  <p><strong>Brand system is now official:</strong> Silka Bold caps headlines, Figtree body, #1D1D1D / #212121 surfaces, #B8DE55 accent for the good, #F36D4E for the pain, PRO/CON badges, and [vrsn] always with brackets. Never VRSN, never Vrsn, never vrsn without brackets in the logo lockup.</p>
+  <p><strong>Product accuracy is non-negotiable.</strong> Knit upper, 4 eyelets, wide toe box, correct colorways, [vrsn] embossed on the medial sole in the sole tone. Last batch we flagged 5-eyelet renders, canvas looks, wrong colorways, parenthesis and red logos, and leaked prompt text. If it does not look real, regenerate.</p>
+  <p><strong>Meta safety holds throughout.</strong> No competitor names or logos, no fabricated scores, no invented stats, no personal-attribute health call-outs, no cure language in ads ("FOOT PAIN ENDS HERE" stays on the LP), no price. Lean on the real proof: 100-day guarantee, No Break-In Ever, Podiatrist Approved if substantiated.</p>
+  <p><strong>Not in this batch, on purpose:</strong> Compare (killed, Meta-unsafe, 0 conversions), Quiz / Legacy PDP / standalone Orthotics Exit campaign (below the 1.2 floor, paused). PF keeps its top 2 hooks live but the fix there is the landing page, not more creative.</p>
+  <div class="standing-grid">
+    <div class="standing-item"><div class="standing-item-label">Quality check</div><div class="standing-item-val">Blitzads QC vs reference photos before submission; client approves on delivery</div></div>
+    <div class="standing-item"><div class="standing-item-label">Delivery cadence</div><div class="standing-item-val">JUN W2, one time, 200 assets</div></div>
+    <div class="standing-item"><div class="standing-item-label">Attach with this brief</div><div class="standing-item-val">Product reference photos + Safe Area Guide + per-angle ad-set map + winner reference frames</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">BlitzAds x Skyvane</div>
+  <div class="footer-note">[vrsn] Creative Brief | JUN W2 2026 | Prepared by Skyvane</div>
+</div>
+
+</div>
+</body>
+</html>
